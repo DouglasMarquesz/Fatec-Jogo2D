@@ -1,0 +1,189 @@
+object Z: TZ
+  Left = 0
+  Top = 0
+  BorderIcons = [biSystemMenu, biMinimize]
+  BorderStyle = Single
+  Caption = '2x Box'
+  ClientHeight = 915
+  ClientWidth = 412
+  Position = ScreenCenter
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  DesignerMasterStyle = 0
+  object recFundo: TRectangle
+    Align = Contents
+    Fill.Kind = Gradient
+    Fill.Gradient.Points = <
+      item
+        Color = claBlack
+        Offset = -0.245341613888740500
+      end
+      item
+        Color = x005C5C5C
+        Offset = -0.239130437374115000
+      end
+      item
+        Color = claNull
+        Offset = -0.232919260859489400
+      end
+      item
+        Color = claBlack
+        Offset = -0.232919260859489400
+      end
+      item
+        Color = xFF190049
+        Offset = 0.000000000000000000
+      end
+      item
+        Color = xFF38006C
+        Offset = 0.322981357574462900
+      end
+      item
+        Color = xFF490D74
+        Offset = 0.701863348484039300
+      end
+      item
+        Color = xFF551360
+        Offset = 1.000000000000000000
+      end>
+    Fill.Gradient.StartPosition.X = 0.149896234273910500
+    Fill.Gradient.StopPosition.X = 0.850103735923767100
+    Size.Width = 412.000000000000000000
+    Size.Height = 915.000000000000000000
+    Size.PlatformDefault = False
+    Stroke.Kind = None
+  end
+  object layTitulo: TLayout
+    Align = Top
+    Size.Width = 412.000000000000000000
+    Size.Height = 50.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 2
+    object btnMenu: TButton
+      Align = Right
+      Margins.Left = 5.000000000000000000
+      Position.X = 364.000000000000000000
+      Size.Width = 48.000000000000000000
+      Size.Height = 50.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = 'detailstoolbutton'
+      TabOrder = 0
+      Text = 'btnMenu'
+    end
+    object lbScore: TLabel
+      Align = Right
+      AutoSize = True
+      StyledSettings = [Family, Style]
+      Margins.Right = 10.000000000000000000
+      Position.X = 243.000000000000000000
+      Size.Width = 85.000000000000000000
+      Size.Height = 50.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Size = 20.000000000000000000
+      TextSettings.FontColor = claAzure
+      TextSettings.HorzAlign = Trailing
+      TextSettings.WordWrap = False
+      Text = '9,999,999'
+      TabOrder = 1
+    end
+    object lbFase: TLabel
+      Align = Right
+      AutoSize = True
+      StyledSettings = [Family, Style]
+      Margins.Right = 10.000000000000000000
+      Position.X = 338.000000000000000000
+      Size.Width = 11.000000000000000000
+      Size.Height = 50.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Size = 20.000000000000000000
+      TextSettings.FontColor = claAzure
+      TextSettings.HorzAlign = Trailing
+      TextSettings.WordWrap = False
+      Text = '0'
+      TabOrder = 2
+    end
+    object lbTitulo: TLabel
+      Align = Center
+      StyledSettings = [Family, Style]
+      Locked = True
+      Size.Width = 85.000000000000000000
+      Size.Height = 25.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Size = 18.000000000000000000
+      TextSettings.FontColor = claAzure
+      Text = '2   Blocks'
+      TabOrder = 3
+      object lbIX: TLabel
+        StyledSettings = []
+        Position.X = 10.000000000000000000
+        Position.Y = -2.000000000000000000
+        Size.Width = 13.000000000000000000
+        Size.Height = 18.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.Font.Family = 'Segoe Script'
+        TextSettings.Font.StyleExt = {00070000000000000004000000}
+        TextSettings.FontColor = claCrimson
+        Text = 'x'
+        TabOrder = 4
+      end
+    end
+  end
+  object layConteudo: TLayout
+    Align = Client
+    Size.Width = 412.000000000000000000
+    Size.Height = 865.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 3
+    object layControles: TLayout
+      Align = Bottom
+      Position.Y = 760.000000000000000000
+      Size.Width = 412.000000000000000000
+      Size.Height = 105.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+      object recPecaBorda: TRectangle
+        Align = Center
+        Fill.Kind = None
+        Size.Width = 75.000000000000000000
+        Size.Height = 75.000000000000000000
+        Size.PlatformDefault = False
+        Stroke.Color = claAliceblue
+        XRadius = 5.000000000000000000
+        YRadius = 5.000000000000000000
+        object recPeca: TRectangle
+          Tag = 2
+          Align = Center
+          Fill.Kind = None
+          Size.Width = 60.000000000000000000
+          Size.Height = 60.000000000000000000
+          Size.PlatformDefault = False
+          Stroke.Kind = None
+          object lbPecaValor: TLabel
+            Align = Center
+            StyledSettings = [Family, Style]
+            Size.Width = 50.000000000000000000
+            Size.Height = 30.000000000000000000
+            Size.PlatformDefault = False
+            TextSettings.Font.Size = 22.000000000000000000
+            TextSettings.FontColor = claAzure
+            TextSettings.HorzAlign = Center
+            Text = '2'
+            TabOrder = 0
+          end
+          object recPecaFundo: TRectangle
+            Align = Contents
+            HitTest = False
+            Opacity = 0.699999988079071000
+            Size.Width = 60.000000000000000000
+            Size.Height = 60.000000000000000000
+            Size.PlatformDefault = False
+            Stroke.Color = claAzure
+            XRadius = 5.000000000000000000
+            YRadius = 5.000000000000000000
+          end
+        end
+      end
+    end
+  end
+end

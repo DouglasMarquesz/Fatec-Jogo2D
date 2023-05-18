@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2023/05/18 10:16:43.000.948,=C:\Users\aluno\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2023/05/18 10:17:13.000.165,C:\Users\aluno\Documents\Embarcadero\Studio\Projects\Unit1.pas=C:\Users\aluno\Documents\GitHub\Fatec-Jogo2D\frmPrincipalU.pas</Transaction>
+    <Transaction>2023/05/18 10:17:13.000.165,C:\Users\aluno\Documents\Embarcadero\Studio\Projects\Unit1.fmx=C:\Users\aluno\Documents\GitHub\Fatec-Jogo2D\frmPrincipalU.fmx</Transaction>
+    <Transaction>2023/05/18 10:17:26.000.963,C:\Users\aluno\Documents\Embarcadero\Studio\Projects\Project1.dproj=C:\Users\aluno\Documents\GitHub\Fatec-Jogo2D\Jogo2D.dproj</Transaction>
+    <Transaction>2023/05/18 10:25:04.000.425,=C:\Users\aluno\Documents\GitHub\Fatec-Jogo2D\GameClasses.pas</Transaction>
+    <Transaction>2023/05/18 10:28:34.000.404,C:\Users\aluno\Documents\GitHub\Fatec-Jogo2D\frmPrincipalU.fmx=C:\Users\aluno\Documents\GitHub\Fatec-Jogo2D\uPrincipal.fmx</Transaction>
+    <Transaction>2023/05/18 10:28:34.000.404,C:\Users\aluno\Documents\GitHub\Fatec-Jogo2D\frmPrincipalU.pas=C:\Users\aluno\Documents\GitHub\Fatec-Jogo2D\uPrincipal.pas</Transaction>
+  </Transactions>
+</BorlandProject>
