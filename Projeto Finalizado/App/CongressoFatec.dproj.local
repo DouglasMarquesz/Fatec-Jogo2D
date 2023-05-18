@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2022/12/20 10:01:26.000.627,=C:\Users\Maicon\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
+    <Transaction>2023/05/09 11:37:59.000.103,=C:\Users\Maicon\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
+    <Transaction>2023/05/09 11:51:28.000.177,C:\Users\Maicon\Documents\Embarcadero\Studio\Projects\Unit2.fmx=C:\Users\Maicon\Desktop\Fatec Mococa - 2x Box\App\uPrincipal.fmx</Transaction>
+    <Transaction>2023/05/09 11:51:28.000.177,C:\Users\Maicon\Documents\Embarcadero\Studio\Projects\Unit2.pas=C:\Users\Maicon\Desktop\Fatec Mococa - 2x Box\App\uPrincipal.pas</Transaction>
+    <Transaction>2023/05/09 12:07:54.000.015,C:\Users\Maicon\Documents\Embarcadero\Studio\Projects\Project4.dproj=C:\Users\Maicon\Desktop\Fatec Mococa - 2x Box\App\CongressoFatec.dproj</Transaction>
+    <Transaction>2023/05/12 14:02:14.000.722,=C:\Users\Maicon\Desktop\Fatec Mococa - 2x Box\App\SOiS.Utils.pas</Transaction>
+    <Transaction>2023/05/13 18:32:27.000.657,C:\Users\Maicon\Desktop\Fatec Mococa - 2x Box\App\SOiS.Utils.pas=C:\Users\Maicon\Desktop\Fatec Mococa - 2x Box\App\Classes.pas</Transaction>
+    <Transaction>2023/05/13 18:56:43.000.867,C:\Users\Maicon\Desktop\Fatec Mococa - 2x Box\App\Classes.pas=C:\Users\Maicon\Desktop\Fatec Mococa - 2x Box\App\GameClasses.pas</Transaction>
+    <Transaction>2023/05/16 19:09:17.000.321,C:\Users\Maicon\Desktop\Fatec Mococa - 2x Box\App\GameClasses.pas=</Transaction>
+    <Transaction>2023/05/16 19:10:13.000.348,=C:\Users\Maicon\Desktop\Fatec Mococa - 2x Box\App\GameClasses.pas</Transaction>
+  </Transactions>
+	<ActiveMobileDevice>
+		<NoProfile Android="Maq1" Android64="Maq1"/>
+	</ActiveMobileDevice>
+</BorlandProject>

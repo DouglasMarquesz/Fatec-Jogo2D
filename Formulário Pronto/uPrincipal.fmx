@@ -11,7 +11,7 @@ object FPrincipal: TFPrincipal
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop]
   OnCreate = FormCreate
-  DesignerMasterStyle = 3
+  DesignerMasterStyle = 0
   object recFundo: TRectangle
     Align = Contents
     Fill.Kind = Gradient
@@ -49,9 +49,8 @@ object FPrincipal: TFPrincipal
       Align = Left
       Margins.Left = 5.000000000000000000
       Position.X = 5.000000000000000000
-      Position.Y = 1.000000000000000000
       Size.Width = 48.000000000000000000
-      Size.Height = 48.000000000000000000
+      Size.Height = 50.000000000000000000
       Size.PlatformDefault = False
       StyleLookup = 'detailstoolbutton'
       TabOrder = 0
@@ -62,8 +61,8 @@ object FPrincipal: TFPrincipal
       AutoSize = True
       StyledSettings = [Family, Style]
       Margins.Right = 10.000000000000000000
-      Position.X = 315.000000000000000000
-      Size.Width = 87.000000000000000000
+      Position.X = 317.000000000000000000
+      Size.Width = 85.000000000000000000
       Size.Height = 50.000000000000000000
       Size.PlatformDefault = False
       TextSettings.Font.Size = 20.000000000000000000
@@ -104,8 +103,8 @@ object FPrincipal: TFPrincipal
       AutoSize = True
       StyledSettings = [Family, Style]
       Margins.Right = 10.000000000000000000
-      Position.X = 280.000000000000000000
-      Size.Width = 25.000000000000000000
+      Position.X = 284.000000000000000000
+      Size.Width = 23.000000000000000000
       Size.Height = 50.000000000000000000
       Size.PlatformDefault = False
       TextSettings.Font.Size = 20.000000000000000000
@@ -417,6 +416,7 @@ object FPrincipal: TFPrincipal
     Size.Width = 250.000000000000000000
     Size.Height = 865.000000000000000000
     Size.PlatformDefault = False
+    Visible = False
     TabOrder = 6
     object Layout1: TLayout
       Align = Top
@@ -25636,7 +25636,7 @@ object FPrincipal: TFPrincipal
     end
     object lblDuracaoAnime: TLabel
       Align = Top
-      Position.Y = 584.000000000000000000
+      Position.Y = 571.000000000000000000
       Size.Width = 250.000000000000000000
       Size.Height = 23.000000000000000000
       Size.PlatformDefault = False
@@ -25652,7 +25652,7 @@ object FPrincipal: TFPrincipal
       Orientation = Horizontal
       Position.Y = 552.000000000000000000
       Size.Width = 250.000000000000000000
-      Size.Height = 32.000000000000000000
+      Size.Height = 19.000000000000000000
       Size.PlatformDefault = False
       TabOrder = 12
       Value = 1.000000000000000000

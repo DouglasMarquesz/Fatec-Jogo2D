@@ -3,14 +3,14 @@
 	<Transactions>
     <Transaction>2022/12/20 10:01:26.000.627,=C:\Users\Maicon\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
     <Transaction>2023/05/09 11:37:59.000.103,=C:\Users\Maicon\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
-    <Transaction>2023/05/09 11:51:28.000.177,C:\Users\Maicon\Documents\Embarcadero\Studio\Projects\Unit2.fmx=C:\Users\Maicon\Desktop\Fatec Mococa - 2x Box\App\uPrincipal.fmx</Transaction>
-    <Transaction>2023/05/09 11:51:28.000.177,C:\Users\Maicon\Documents\Embarcadero\Studio\Projects\Unit2.pas=C:\Users\Maicon\Desktop\Fatec Mococa - 2x Box\App\uPrincipal.pas</Transaction>
-    <Transaction>2023/05/09 12:07:54.000.015,C:\Users\Maicon\Documents\Embarcadero\Studio\Projects\Project4.dproj=C:\Users\Maicon\Desktop\Fatec Mococa - 2x Box\App\CongressoFatec.dproj</Transaction>
+    <Transaction>2023/05/09 11:51:28.000.177,C:\Users\Maicon\Desktop\Fatec Mococa - 2x Box\App\uPrincipal.pas=C:\Users\Maicon\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
+    <Transaction>2023/05/09 11:51:28.000.177,C:\Users\Maicon\Desktop\Fatec Mococa - 2x Box\App\uPrincipal.fmx=C:\Users\Maicon\Documents\Embarcadero\Studio\Projects\Unit2.fmx</Transaction>
+    <Transaction>2023/05/09 12:07:54.000.015,C:\Users\Maicon\Desktop\Fatec Mococa - 2x Box\App\CongressoFatec.dproj=C:\Users\Maicon\Documents\Embarcadero\Studio\Projects\Project4.dproj</Transaction>
     <Transaction>2023/05/18 11:22:29.000.933,=C:\Users\aluno\Documents\GitHub\Fatec-Jogo2D\GameClasses.pas</Transaction>
     <Transaction>2023/05/18 11:23:33.000.658,C:\Users\aluno\Documents\GitHub\Fatec-Jogo2D\GameClasses.pas=</Transaction>
     <Transaction>2023/05/18 11:23:41.000.160,=C:\Users\aluno\Documents\GitHub\Fatec-Jogo2D\Formulário Pronto\GameClasses.pas</Transaction>
   </Transactions>
 	<ActiveMobileDevice>
-		<NoProfile Android="" Android64=""/>
+		<NoProfile Android="" Android64="ZF523L76CQ"/>
 	</ActiveMobileDevice>
 </BorlandProject>

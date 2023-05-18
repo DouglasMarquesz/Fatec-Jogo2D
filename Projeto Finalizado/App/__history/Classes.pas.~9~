@@ -1,0 +1,403 @@
+unit Classes;
+
+interface
+
+uses
+  SOiS.Utils.Interfaces,
+  System.Classes,
+  System.SysUtils,
+  System.UITypes,
+  System.StrUtils,
+  System.Threading,
+  Math,
+  FMX.Objects,
+  FMX.Ani,
+  FMX.Types,
+  FMX.Effects,
+  FMX.Forms,
+  FMX.Layouts,
+  FMX.Graphics,
+  FMX.StdCtrls,
+  System.Generics.Collections;
+
+
+type
+  TAnimation = class(TFloatAnimation)
+  private
+    FTarget: TFmxObject;
+    FFinish: TProc<TObject>;
+    FProcess: TProc<TFloatAnimation,TObject>;
+    procedure DoFinish(Sender: TObject);
+    procedure DoProcess(Sender: TObject);
+  public
+    function AnimeType(const Value: TAnimationType): TAnimation;
+    function AnimeInterpolation(const Value: TInterpolationType): TAnimation;
+    function AnimeDuration(const Value: Single): TAnimation;
+    function AnimeProperty(const Value: String): TAnimation;
+    function AnimeDelay(const Value: Single): TAnimation;
+    function AnimeValue(const AValue: Single): TAnimation;
+    function AnimeFinish(Value: TProc<TObject>): TAnimation;
+    function AnimeProcess(Value: TProc<TFloatAnimation,TObject>): TAnimation;
+
+    constructor Animate(ATarget: TFmxObject; APropertyName: String;
+      ANewValue: Single; ADuration: Single=0.2; ADelay: Single=0; AOnFinish: TProc<TObject>=nil;
+      AOnProcess: TProc<TFloatAnimation,TObject>=nil);
+  end;
+
+  TRectangleHelper = Class helper for TRectangle
+  private
+    function FindLabel: TLabel;
+    function FindBackground: TRectangle;
+    function getValue: Single;
+    procedure setValue(const Value: Single);
+  public
+    property Value: Single read getValue write setValue;
+
+    function Column: Integer;
+    function Line: Integer;
+    function GetLeftColumn: TLayout;
+    function GetRightColumn: TLayout;
+    function CheckHit: Double;
+  End;
+
+const
+{$IFDEF Android}
+  ANITIME = 0.2;
+{$ENDIF}
+{$IFDEF WIN32 or WIN64}
+  ANITIME = 0.15;
+{$ENDIF}
+
+var
+  ColorList: TDictionary<Double, TAlphaColor>;
+  Anime: TAnimation;
+
+implementation
+
+
+{ TAnimation }
+
+constructor TAnimation.Animate(ATarget: TFmxObject; APropertyName: String;
+  ANewValue, ADuration, ADelay: Single; AOnFinish: TProc<TObject>;
+  AOnProcess: TProc<TFloatAnimation, TObject>);
+begin
+  inherited Create(nil);
+
+  FTarget := ATarget;
+  FFinish := AOnFinish;
+  FProcess:= AOnProcess;
+  OnFinish := DoFinish;
+  StartFromCurrent := true;
+  PropertyName := APropertyName;
+  Parent := ATarget;
+  StopValue := ANewValue;
+  Duration := ADuration;
+  Delay := ADelay;
+
+  Start;
+
+end;
+
+function TAnimation.AnimeType(const Value: TAnimationType): TAnimation;
+begin
+  Result := Self;
+  AnimationType := Value;
+end;
+
+procedure TAnimation.DoFinish(Sender: TObject);
+begin
+  if Assigned(FFinish) then
+    FFinish(FTarget);
+end;
+
+procedure TAnimation.DoProcess(Sender: TObject);
+begin
+  if Assigned(FProcess) then
+    FProcess(self, FTarget);
+end;
+
+function TAnimation.AnimeInterpolation(const Value: TInterpolationType): TAnimation;
+begin
+  Result := Self;
+  Interpolation := Value;
+end;
+
+{ TRectangleHelper }
+
+function TRectangleHelper.CheckHit: Double;
+var
+  LTrack, LTrackLeft, LTrackRight: TLayout;
+  LPieceTop, LPieceBottom, LPieceLeft, LPieceRight: TRectangle;
+  LCheckCount: Integer;
+  LValue: Single;
+begin
+  Result := 0;
+  LCheckCount  := 0;
+  LTrack       := nil;
+  LPieceLeft   := nil;
+  LTrackRight  := nil;
+  LPieceTop    := nil;
+  LPieceBottom := nil;
+  LTrackLeft   := nil;
+  LPieceRight  := nil;
+
+  LTrack := TLayout(Parent);
+  LTrackLeft := GetLeftColumn;
+  LTrackRight := GetRightColumn;
+
+  if (LTrackLeft <> nil) and (LTrackLeft.Children.Count > Line) then
+    LPieceLeft := TRectangle(LTrackLeft.Children[Line]);
+
+  if (LTrackRight <> nil) and (LTrackRight.Children.Count > Line) then
+    LPieceRight := TRectangle(LTrackRight.Children[Line]);
+
+  if Line > 1 then
+    LPieceTop := TRectangle(LTrack.Children[Line-1]);
+
+  if Line < LTrack.ChildrenCount-1 then
+    LPieceBottom := TRectangle(LTrack.Children[Line-1]);
+
+  if (LPieceLeft <> nil) and (LPieceLeft.Value=Value) then
+    Inc(LCheckCount);
+  if (LPieceRight <> nil) and (LPieceRight.Value=Value) then
+    Inc(LCheckCount);
+  if (LPieceTop <> nil) and (LPieceTop.Value=Value) then
+    Inc(LCheckCount);
+//  if (LPieceBottom <> nil) and (LPieceBottom.Value=Value) then
+//    Inc(LCheckCount);
+
+  if LCheckCount=0 then
+    exit;
+
+  if LCheckCount=1 then begin // incorpora no lugar da peça anterior
+    LValue := Value;
+    Result := LValue*2;
+
+    if (LPieceLeft <> nil) and (LPieceLeft.Value=LValue) and not (csDestroying in LPieceLeft.ComponentState) then begin
+      Self.Align := TAlignLayout.None;
+      TAnimator.AnimateColor(Self.Children[0], 'fill.color', ColorList[Result], ANITIME, TAnimationType.Out, TInterpolationType.Quadratic);
+      TAnimator.AnimateFloat(Self, 'Opacity', 0.4, ANITIME, TAnimationType.Out, TInterpolationType.Quadratic);
+      TAnimator.AnimateFloat(Self, 'Width', Width*2+5, ANITIME, TAnimationType.Out, TInterpolationType.Quadratic);
+//      TAnimator.AnimateFloatWait(Self, 'Position.X', -(Width*2+5), ANITIME, TAnimationType.Out, TInterpolationType.Quadratic);
+        LPieceLeft.Value := LValue*2;
+        Result := Result + LPieceLeft.CheckHit;
+      Anime:=TAnimation.Animate(Self, 'Position.X', -(Width*2+5), ANITIME, 0)
+        .AnimeType(TAnimationType.Out)
+        .AnimeInterpolation(TInterpolationType.Quadratic)
+      procedure (Sender: TObject) begin
+        TFloatAnimation(Sender).parent.DisposeOf;
+      end);
+    end;
+    if (LPieceRight <> nil) and (LPieceRight.Value=LValue) and not (csDestroying in LPieceRight.ComponentState) then begin
+      Self.Align := TAlignLayout.None;
+      TAnimator.AnimateColor(Self.Children[0], 'fill.color', ColorList[Result], ANITIME, TAnimationType.Out, TInterpolationType.Quadratic);
+      TAnimator.AnimateFloat(Self, 'Opacity', 0.4, ANITIME, TAnimationType.Out, TInterpolationType.Quadratic);
+//      TAnimator.AnimateFloatWait(Self, 'Width', Width*2+5, ANITIME, TAnimationType.Out, TInterpolationType.Quadratic);
+        LPieceRight.Value := LValue*2;
+        Result := Result + LPieceRight.CheckHit;
+      Anime:=TSOAnimator.AnimateFloatDelay(Self, 'Width', Width*2+5, ANITIME, 0, TAnimationType.Out, TInterpolationType.Quadratic,
+      procedure (Sender: TObject) begin
+        TFloatAnimation(Sender).parent.DisposeOf;
+      end);
+
+    end;
+    if (LPieceTop <> nil) and (LPieceTop.Value=LValue) and not (csDestroying in LPieceTop.ComponentState) then begin
+      Self.Align := TAlignLayout.None;
+      TAnimator.AnimateColor(Self.Children[0], 'fill.color', ColorList[Result], ANITIME, TAnimationType.Out, TInterpolationType.Quadratic);
+      TAnimator.AnimateFloat(Self, 'Opacity', 0.4, ANITIME, TAnimationType.Out, TInterpolationType.Quadratic);
+      TAnimator.AnimateFloat(Self, 'Height', Height*2+5, ANITIME, TAnimationType.Out, TInterpolationType.Quadratic);
+//      TAnimator.AnimateFloatWait(Self, 'Position.Y', Position.Y-Height-5, ANITIME, TAnimationType.Out, TInterpolationType.Quadratic);
+        LPieceTop.Value := LValue*2;
+        Result := Result + LPieceTop.CheckHit;
+      Anime:=TSOAnimator.AnimateFloatDelay(Self, 'Position.Y', Position.Y-Height-5, ANITIME, 0, TAnimationType.Out, TInterpolationType.Quadratic,
+      procedure (Sender: TObject) begin
+        TFloatAnimation(Sender).parent.DisposeOf;
+      end);
+    end;
+//    if (LPieceBottom <> nil) and (LPieceBottom.Value=LValue) and not (csDestroying in LPieceBottom.ComponentState) then begin // realmente necessario? talvez seja impossivel ocorrer hit abaixo com LCheckCount=1
+//      LPieceBottom.Value := LValue*2;
+//      Result := Result + LPieceBottom.CheckHit;
+//    end;
+
+//    DisposeOf;
+//    Self := nil;
+  end
+  else begin
+    LValue := Value;
+    Result := LValue*4;
+    Value := LValue*4;
+
+    if (LPieceBottom <> nil) and (LPieceBottom.Value=LValue) and not (csDestroying in LPieceBottom.ComponentState) then begin // deve vir primeiro por causa do movimento de subida que subtrai 1 de children
+      LPieceBottom.DisposeOf;
+      LPieceBottom := nil;
+    end;
+    if (LPieceLeft <> nil) and (LPieceLeft.Value=LValue) and not (csDestroying in LPieceLeft.ComponentState) then begin
+      LPieceLeft.DisposeOf;
+      LPieceLeft := nil;
+    end;
+    if (LPieceRight <> nil) and (LPieceRight.Value=LValue) and not (csDestroying in LPieceRight.ComponentState) then begin
+      LPieceRight.DisposeOf;
+      LPieceRight := nil;
+    end;
+    if (LPieceTop <> nil) and (LPieceTop.Value=LValue) and not (csDestroying in LPieceTop.ComponentState) then begin
+      LPieceTop.DisposeOf;
+      LPieceTop := nil;
+    end;
+
+    Result := Result + CheckHit;
+  end;
+
+end;
+
+function TRectangleHelper.Column: Integer;
+var
+  LTrack: TLayout;
+begin
+  LTrack := TLayout(Parent);
+  case IndexStr(LowerCase(LTrack.Name), ['laystrip1', 'laystrip2', 'laystrip3', 'laystrip4', 'laystrip5']) of
+    0: result := 1;
+    1: result := 2;
+    2: result := 3;
+    3: result := 4;
+    4: result := 5;
+  end;
+
+end;
+
+function TRectangleHelper.FindBackground: TRectangle;
+var
+  Obj: TFMXObject;
+begin
+  Obj := nil;
+
+  for Obj in Children do begin
+    if Obj is TRectangle then begin
+      Result := TRectangle(Obj);
+      break;
+    end;
+  end;
+
+  if Obj=nil then
+    raise Exception.Create('Objeto cor de fundo não encontrado.');
+end;
+
+function TRectangleHelper.FindLabel: TLabel;
+var
+  Obj: TFMXObject;
+begin
+  Obj := nil;
+
+  if ChildrenCount=0 then begin
+    result := nil;
+    exit;
+  end;
+
+  for Obj in Children do begin
+    if Obj is TLabel then begin
+      Result := TLabel(Obj);
+      break;
+    end;
+  end;
+
+  if Obj=nil then
+    raise Exception.Create('Objeto valor não encontrado.');
+end;
+
+function TRectangleHelper.GetLeftColumn: TLayout;
+var
+  I: Integer;
+  LTrack: TLayout;
+begin
+  Result := nil;
+  if Column = 1 then
+    exit;
+
+  Result := TLayout(Parent.Parent.Children[Column-2]);
+end;
+
+function TRectangleHelper.GetRightColumn: TLayout;
+begin
+  Result := nil;
+  if Column = 5 then
+    exit;
+
+  Result := TLayout(Parent.Parent.Children[Column]);
+end;
+
+function TRectangleHelper.getValue: Single;
+begin
+  Result := Tag;
+end;
+
+function TRectangleHelper.Line: Integer;
+begin
+  Result := Parent.Children.IndexOf(Self);
+end;
+
+procedure TRectangleHelper.setValue(const Value: Single);
+begin
+  Tag := Round(Value);
+
+  if Value <= Power(2,13) then
+    FindLabel.Text := Value.ToString
+  else if Value <= Power(2,20) then
+    FindLabel.Text := Format('%dK', [Floor(Value/1024)])
+  else if Value <= Power(2,30) then
+    FindLabel.Text := Format('%dM', [Floor(Value/(1024*1024))])
+  else if Value <= Power(2,40) then
+    FindLabel.Text := Format('%dG', [Floor(Value/(1024*1024*1024))])
+  else
+    FindLabel.Text := Format('%dT', [Floor(Value/Power(2,40))]);
+
+  TAnimator.AnimateColor(FindBackground, 'Fill.Color', ColorList.Items[Value], 0.3);
+end;
+
+
+initialization
+  ColorList := TDictionary<Double, TAlphaColor>.Create;
+  ColorList.Add(2, TAlphaColors.Yellowgreen);
+  ColorList.Add(Power(2,2), TAlphaColors.Steelblue);
+  ColorList.Add(Power(2,3), TAlphaColors.Indianred);
+  ColorList.Add(Power(2,4), TAlphaColors.Indigo);
+  ColorList.Add(Power(2,5), TAlphaColors.Gold);
+  ColorList.Add(Power(2,6), TAlphaColors.Dodgerblue);
+  ColorList.Add(Power(2,7), TAlphaColors.Firebrick);
+  ColorList.Add(Power(2,8), TAlphaColors.Greenyellow);
+  ColorList.Add(Power(2,9), TAlphaColors.Lightcoral);
+  ColorList.Add(Power(2,10), TAlphaColors.Lightskyblue);
+  ColorList.Add(Power(2,11), TAlphaColors.Mediumorchid);
+  ColorList.Add(Power(2,12), TAlphaColors.Palevioletred);
+  ColorList.Add(Power(2,13), TAlphaColors.Rosybrown);
+  ColorList.Add(Power(2,14), TAlphaColors.Sandybrown);
+  ColorList.Add(Power(2,15), TAlphaColors.Springgreen);
+  ColorList.Add(Power(2,16), TAlphaColors.Tan);
+  ColorList.Add(Power(2,17), TAlphaColors.Tomato);
+  ColorList.Add(Power(2,18), TAlphaColors.Violet);
+  ColorList.Add(Power(2,19), TAlphaColors.Palegreen);
+  ColorList.Add(Power(2,20), TAlphaColors.Mediumspringgreen);
+  ColorList.Add(Power(2,21), TAlphaColors.LegacySkyBlue);
+  ColorList.Add(Power(2,22), TAlphaColors.Lightsteelblue);
+  ColorList.Add(Power(2,23), TAlphaColors.Lightsalmon);
+  ColorList.Add(Power(2,24), TAlphaColors.Lightpink);
+  ColorList.Add(Power(2,25), TAlphaColors.Lightcoral);
+  ColorList.Add(Power(2,26), TAlphaColors.Lavender);
+  ColorList.Add(Power(2,27), TAlphaColors.Hotpink);
+  ColorList.Add(Power(2,28), TAlphaColors.Goldenrod);
+  ColorList.Add(Power(2,29), TAlphaColors.Deeppink);
+  ColorList.Add(Power(2,30), TAlphaColors.Darkslateblue);
+  ColorList.Add(Power(2,31), TAlphaColors.Darkred);
+  ColorList.Add(Power(2,32), TAlphaColors.Darkorchid);
+  ColorList.Add(Power(2,33), TAlphaColors.Darkorange);
+  ColorList.Add(Power(2,34), TAlphaColors.Darkmagenta);
+  ColorList.Add(Power(2,35), TAlphaColors.Crimson);
+  ColorList.Add(Power(2,36), TAlphaColors.Coral);
+  ColorList.Add(Power(2,37), TAlphaColors.Chocolate);
+  ColorList.Add(Power(2,38), TAlphaColors.Chartreuse);
+  ColorList.Add(Power(2,39), TAlphaColors.Khaki);
+  ColorList.Add(Power(2,40), TAlphaColors.Palegreen);
+  ColorList.Add(Power(2,41), TAlphaColors.Thistle);
+
+finalization
+  ColorList.Free;
+
+end.
