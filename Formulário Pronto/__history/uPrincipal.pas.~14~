@@ -1,0 +1,74 @@
+unit uPrincipal;
+
+interface
+
+uses
+  System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
+  FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, FMX.Objects,
+  FMX.StdCtrls, FMX.Controls.Presentation, FMX.Layouts, FMX.MultiView;
+
+type
+  TFPrincipal = class(TForm)
+    recFundo: TRectangle;
+    layTitulo: TLayout;
+    btnMenu: TButton;
+    lblScore: TLabel;
+    lblTitulo: TLabel;
+    lblX: TLabel;
+    lblFase: TLabel;
+    layConteudo: TLayout;
+    layControles: TLayout;
+    recPecaBorda: TRectangle;
+    recPeca: TRectangle;
+    recPecaFundo: TRectangle;
+    lblPecaValor: TLabel;
+    recProximaPecaBorda: TRectangle;
+    recProximaPeca: TRectangle;
+    recProximaPecaFundo: TRectangle;
+    lblProximaPeca: TLabel;
+    layBomba: TLayout;
+    recBomba: TRectangle;
+    pthBomba: TPath;
+    lblBomba: TLabel;
+    layPalco: TLayout;
+    layTrilha1: TLayout;
+    Rectangle1: TRectangle;
+    layTrilha2: TLayout;
+    Rectangle2: TRectangle;
+    layTrilha3: TLayout;
+    Rectangle3: TRectangle;
+    layTrilha4: TLayout;
+    Rectangle4: TRectangle;
+    layTrilha5: TLayout;
+    Rectangle5: TRectangle;
+    MultiView1: TMultiView;
+    Layout1: TLayout;
+    Circle1: TCircle;
+    Layout2: TLayout;
+    Label2: TLabel;
+    btLevel3: TSpeedButton;
+    btLevel2: TSpeedButton;
+    btLevel1: TSpeedButton;
+    Line1: TLine;
+    btRecords: TSpeedButton;
+    btSavarJogo: TSpeedButton;
+    btNovoJogo: TSpeedButton;
+    lblDuracaoAnime: TLabel;
+    tkbDuracaoAnime: TTrackBar;
+    Label1: TLabel;
+    Line2: TLine;
+    procedure btnMenuClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FPrincipal: TFPrincipal;
+
+implementation
+
+{$R *.fmx}
+
+end.

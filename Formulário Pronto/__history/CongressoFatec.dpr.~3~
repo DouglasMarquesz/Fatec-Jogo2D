@@ -1,0 +1,19 @@
+program CongressoFatec;
+
+uses
+  madExcept,
+  madLinkDisAsm,
+  madListHardware,
+  madListProcesses,
+  madListModules,
+  System.StartUpCopy,
+  FMX.Forms,
+  uPrincipal in 'uPrincipal.pas' {FPrincipal};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.CreateForm(TFPrincipal, FPrincipal);
+  Application.Run;
+end.
